@@ -23,9 +23,9 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
   * They are loaded from the `triggers` directory on bot startup.
   * Typesafe.
 * **Component Builder System (dynamic interaction builders)**:
-  * A simple and powerful component system.
+  * A simple and powerful component builder system.
   * Components are used as builders for buttons, select menus and modals.
-  * Framework components are used instead of raw Discord.js components.
+  * Framework component builder are used instead of raw Discord.js component builders.
   * Can customize the component's behavior (e.g. specific allowed executors & expiration time).
   * Typesafe.
 * **Config System**:
