@@ -1,5 +1,6 @@
 import { container } from "@/index";
 import {
+  SnowflakeUtil,
   StringSelectMenuBuilder,
   type StringSelectMenuInteraction
 } from "discord.js";
@@ -16,31 +17,12 @@ export class StringSelectMenuComponentBuilder extends StringSelectMenuBuilder {
     allowedExecutorIds = [],
     executionThreshold = 60 * 1000 * 5
   }: StringSelectMenuComponentBuilderExecuteOptions) {
-    const trigger = container.triggers
-      .filter(t => t.type === "stringSelectMenu")
-      .find(t =>
-        t.startsWith
-          ? //@ts-ignore
-            this.data.custom_id.startsWith(t.id)
-          : //@ts-ignore
-            t.id === this.data.custom_id
-      );
+    const customId = SnowflakeUtil.generate().toString();
 
-    if (trigger) {
-      container.logger.warn(
-        "Two string select menu components have the same id, trigger will be used"
-      );
-      return this;
-    }
-
-    this.setCustomId(
-      //@ts-ignore
-      `${this.data.custom_id}#${this.generateId()}`
-    );
+    this.setCustomId(customId);
 
     container.components.push({
-      //@ts-ignore
-      id: this.data.custom_id,
+      id: customId,
       type: "stringSelectMenu",
       allowedExecutorIds,
       executionThreshold,
@@ -49,15 +31,10 @@ export class StringSelectMenuComponentBuilder extends StringSelectMenuBuilder {
 
     setTimeout(() => {
       container.components = container.components.filter(
-        //@ts-ignore
-        c => c.type !== "stringSelectMenu" || c.id !== this.data.custom_id
+        c => c.type !== "stringSelectMenu" || c.id !== customId
       );
     }, executionThreshold);
 
     return this;
-  }
-
-  generateId() {
-    return Math.floor(1000 + Math.random() * 9000);
   }
 }

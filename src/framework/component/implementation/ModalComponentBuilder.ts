@@ -1,5 +1,9 @@
 import { container } from "@/index";
-import { ModalBuilder, type ModalSubmitInteraction } from "discord.js";
+import {
+  ModalBuilder,
+  type ModalSubmitInteraction,
+  SnowflakeUtil
+} from "discord.js";
 
 type ModalComponentBuilderExecuteOptions = {
   execute: (interaction: ModalSubmitInteraction<"cached">) => unknown;
@@ -13,14 +17,12 @@ export class ModalComponentBuilder extends ModalBuilder {
     allowedExecutorIds = [],
     executionThreshold = 60 * 1000 * 5
   }: ModalComponentBuilderExecuteOptions) {
-    this.setCustomId(
-      //@ts-ignore
-      `${this.data.custom_id}#${this.generateId()}`
-    );
+    const customId = SnowflakeUtil.generate().toString();
+
+    this.setCustomId(customId);
 
     container.components.push({
-      //@ts-ignore
-      id: this.data.custom_id,
+      id: customId,
       type: "modal",
       allowedExecutorIds,
       executionThreshold,
@@ -29,15 +31,10 @@ export class ModalComponentBuilder extends ModalBuilder {
 
     setTimeout(() => {
       container.components = container.components.filter(
-        //@ts-ignore
-        c => c.type !== "modal" || c.id !== this.data.custom_id
+        c => c.type !== "modal" || c.id !== customId
       );
     }, executionThreshold);
 
     return this;
-  }
-
-  generateId() {
-    return Math.floor(1000 + Math.random() * 9000);
   }
 }

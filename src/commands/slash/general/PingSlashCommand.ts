@@ -29,7 +29,6 @@ export class PingSlashCommand extends BaseSlashCommand {
         new ActionRowBuilder<ButtonComponentBuilder>().setComponents(
           new ButtonComponentBuilder()
             .setLabel("Test")
-            .setCustomId("test")
             .setStyle(ButtonStyle.Primary)
             .setExecute({
               execute: i => {
@@ -42,7 +41,6 @@ export class PingSlashCommand extends BaseSlashCommand {
             }),
           new ButtonComponentBuilder()
             .setLabel("Test 2")
-            .setCustomId("testTwo")
             .setStyle(ButtonStyle.Primary)
             .setExecute({
               execute: i => {

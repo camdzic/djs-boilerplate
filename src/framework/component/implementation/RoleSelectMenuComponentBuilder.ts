@@ -1,7 +1,8 @@
 import { container } from "@/index";
 import {
   RoleSelectMenuBuilder,
-  type RoleSelectMenuInteraction
+  type RoleSelectMenuInteraction,
+  SnowflakeUtil
 } from "discord.js";
 
 type RoleSelectMenuComponentBuilderExecuteOptions = {
@@ -16,31 +17,12 @@ export class RoleSelectMenuComponentBuilder extends RoleSelectMenuBuilder {
     allowedExecutorIds = [],
     executionThreshold = 60 * 1000 * 5
   }: RoleSelectMenuComponentBuilderExecuteOptions) {
-    const trigger = container.triggers
-      .filter(t => t.type === "roleSelectMenu")
-      .find(t =>
-        t.startsWith
-          ? //@ts-ignore
-            this.data.custom_id.startsWith(t.id)
-          : //@ts-ignore
-            t.id === this.data.custom_id
-      );
+    const customId = SnowflakeUtil.generate().toString();
 
-    if (trigger) {
-      container.logger.warn(
-        "Two role select menu components have the same id, trigger will be used"
-      );
-      return this;
-    }
-
-    this.setCustomId(
-      //@ts-ignore
-      `${this.data.custom_id}#${this.generateId()}`
-    );
+    this.setCustomId(customId);
 
     container.components.push({
-      //@ts-ignore
-      id: this.data.custom_id,
+      id: customId,
       type: "roleSelectMenu",
       allowedExecutorIds,
       executionThreshold,
@@ -49,15 +31,10 @@ export class RoleSelectMenuComponentBuilder extends RoleSelectMenuBuilder {
 
     setTimeout(() => {
       container.components = container.components.filter(
-        //@ts-ignore
-        c => c.type !== "roleSelectMenu" || c.id !== this.data.custom_id
+        c => c.type !== "roleSelectMenu" || c.id !== customId
       );
     }, executionThreshold);
 
     return this;
-  }
-
-  generateId() {
-    return Math.floor(1000 + Math.random() * 9000);
   }
 }

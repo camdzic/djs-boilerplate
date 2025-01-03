@@ -1,7 +1,8 @@
 import { container } from "@/index";
 import {
   MentionableSelectMenuBuilder,
-  type MentionableSelectMenuInteraction
+  type MentionableSelectMenuInteraction,
+  SnowflakeUtil
 } from "discord.js";
 
 type MentionableSelectMenuComponentBuilderExecuteOptions = {
@@ -16,31 +17,12 @@ export class MentionableSelectMenuComponentBuilder extends MentionableSelectMenu
     allowedExecutorIds = [],
     executionThreshold = 60 * 1000 * 5
   }: MentionableSelectMenuComponentBuilderExecuteOptions) {
-    const trigger = container.triggers
-      .filter(t => t.type === "mentionableSelectMenu")
-      .find(t =>
-        t.startsWith
-          ? //@ts-ignore
-            this.data.custom_id.startsWith(t.id)
-          : //@ts-ignore
-            t.id === this.data.custom_id
-      );
+    const customId = SnowflakeUtil.generate().toString();
 
-    if (trigger) {
-      container.logger.warn(
-        "Two mentionable select menu components have the same id, trigger will be used"
-      );
-      return this;
-    }
-
-    this.setCustomId(
-      //@ts-ignore
-      `${this.data.custom_id}#${this.generateId()}`
-    );
+    this.setCustomId(customId);
 
     container.components.push({
-      //@ts-ignore
-      id: this.data.custom_id,
+      id: customId,
       type: "mentionableSelectMenu",
       allowedExecutorIds,
       executionThreshold,
@@ -49,15 +31,10 @@ export class MentionableSelectMenuComponentBuilder extends MentionableSelectMenu
 
     setTimeout(() => {
       container.components = container.components.filter(
-        //@ts-ignore
-        c => c.type !== "mentionableSelectMenu" || c.id !== this.data.custom_id
+        c => c.type !== "mentionableSelectMenu" || c.id !== customId
       );
     }, executionThreshold);
 
     return this;
-  }
-
-  generateId() {
-    return Math.floor(1000 + Math.random() * 9000);
   }
 }

@@ -1,7 +1,8 @@
 import { container } from "@/index";
 import {
   ChannelSelectMenuBuilder,
-  type ChannelSelectMenuInteraction
+  type ChannelSelectMenuInteraction,
+  SnowflakeUtil
 } from "discord.js";
 
 type ChannelSelectMenuComponentBuilderExecuteOptions = {
@@ -16,31 +17,12 @@ export class ChannelSelectMenuComponentBuilder extends ChannelSelectMenuBuilder 
     allowedExecutorIds = [],
     executionThreshold = 60 * 1000 * 5
   }: ChannelSelectMenuComponentBuilderExecuteOptions) {
-    const trigger = container.triggers
-      .filter(t => t.type === "channelSelectMenu")
-      .find(t =>
-        t.startsWith
-          ? //@ts-ignore
-            this.data.custom_id.startsWith(t.id)
-          : //@ts-ignore
-            t.id === this.data.custom_id
-      );
+    const customId = SnowflakeUtil.generate().toString();
 
-    if (trigger) {
-      container.logger.warn(
-        "Two channel select menu components have the same id, trigger will be used"
-      );
-      return this;
-    }
-
-    this.setCustomId(
-      //@ts-ignore
-      `${this.data.custom_id}#${this.generateId()}`
-    );
+    this.setCustomId(customId);
 
     container.components.push({
-      //@ts-ignore
-      id: this.data.custom_id,
+      id: customId,
       type: "channelSelectMenu",
       allowedExecutorIds,
       executionThreshold,
@@ -49,15 +31,10 @@ export class ChannelSelectMenuComponentBuilder extends ChannelSelectMenuBuilder 
 
     setTimeout(() => {
       container.components = container.components.filter(
-        //@ts-ignore
-        c => c.type !== "channelSelectMenu" || c.id !== this.data.custom_id
+        c => c.type !== "channelSelectMenu" || c.id !== customId
       );
     }, executionThreshold);
 
     return this;
-  }
-
-  generateId() {
-    return Math.floor(1000 + Math.random() * 9000);
   }
 }
