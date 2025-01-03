@@ -1,22 +1,18 @@
 import type { BaseGuard, BaseGuardTypeMap } from "@/framework/guard/BaseGuard";
 import type {
-  AnySelectMenuInteraction,
   ButtonInteraction,
   ChannelSelectMenuInteraction,
   MentionableSelectMenuInteraction,
-  ModalSubmitInteraction,
   RoleSelectMenuInteraction,
   StringSelectMenuInteraction
 } from "discord.js";
 
 export type BaseTriggerTypeMap = {
   button: ButtonInteraction<"cached">;
-  anySelectMenu: AnySelectMenuInteraction<"cached">;
   stringSelectMenu: StringSelectMenuInteraction<"cached">;
   channelSelectMenu: ChannelSelectMenuInteraction<"cached">;
   roleSelectMenu: RoleSelectMenuInteraction<"cached">;
   mentionableSelectMenu: MentionableSelectMenuInteraction<"cached">;
-  modal: ModalSubmitInteraction<"cached">;
 };
 
 type BaseTriggerOptions<T extends keyof BaseTriggerTypeMap> = {

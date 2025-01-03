@@ -3,7 +3,7 @@ import { GuardException } from "@/framework/exception/GuardException";
 import type { BaseGuard, BaseGuardTypeMap } from "@/framework/guard/BaseGuard";
 import { container } from "@/index";
 import { ErrorEmbed } from "@/utilities/embeds/ErrorEmbed";
-import type { CommandInteractionOptionResolver, Interaction } from "discord.js";
+import { MessageFlags, type Interaction } from "discord.js";
 
 export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
   constructor() {
@@ -23,7 +23,7 @@ export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
     if (!slashCommand) {
       interaction.reply({
         embeds: [new ErrorEmbed("Unable to find wanted slash command")],
-        flags: ["Ephemeral"]
+        flags: [MessageFlags.Ephemeral]
       });
       return;
     }
@@ -51,17 +51,14 @@ export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
               "You cannot use this slash command due to a lack of guards"
             )
           ],
-          flags: ["Ephemeral"]
+      flags: [MessageFlags.Ephemeral]
         });
         return;
       }
     }
 
     try {
-      await slashCommand.execute(
-        interaction,
-        interaction.options as CommandInteractionOptionResolver<"cached">
-      );
+      await slashCommand.execute(interaction);
     } catch (error) {
       interaction.reply({
         embeds: [
@@ -69,7 +66,7 @@ export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
             "Failed to execute slash command, error will be reported"
           )
         ],
-        flags: ["Ephemeral"]
+        flags: [MessageFlags.Ephemeral]
       });
       container.logger.error("Failed to execute slash command");
       container.logger.error(error);

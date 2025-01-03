@@ -2,7 +2,6 @@ import type { BaseGuard, BaseGuardTypeMap } from "@/framework/guard/BaseGuard";
 import type {
   ApplicationCommandOptionData,
   ChatInputCommandInteraction,
-  CommandInteractionOptionResolver,
   PermissionResolvable
 } from "discord.js";
 
@@ -39,8 +38,5 @@ export abstract class BaseSlashCommand {
     this.permissions = permissions;
   }
 
-  abstract execute(
-    interaction: ChatInputCommandInteraction<"cached">,
-    options: CommandInteractionOptionResolver<"cached">
-  ): unknown;
+  abstract execute(interaction: ChatInputCommandInteraction<"cached">): unknown;
 }

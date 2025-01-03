@@ -1,7 +1,8 @@
 import { BaseContextMenuCommand, ChannelTypeGuard } from "@/framework";
 import {
   ChannelType,
-  type MessageContextMenuCommandInteraction
+  type MessageContextMenuCommandInteraction,
+  MessageFlags
 } from "discord.js";
 
 export class PingContextMenuCommand extends BaseContextMenuCommand<"messageContextMenuCommand"> {
@@ -16,7 +17,7 @@ export class PingContextMenuCommand extends BaseContextMenuCommand<"messageConte
   execute(interaction: MessageContextMenuCommandInteraction<"cached">) {
     return interaction.reply({
       content: "Pong!",
-      flags: ["Ephemeral"]
+      flags: [MessageFlags.Ephemeral]
     });
   }
 }

@@ -2,11 +2,13 @@ import { GuardException } from "@/framework/exception/GuardException";
 import { BaseGuard } from "@/framework/guard/BaseGuard";
 import { container } from "@/index";
 import type {
-  AnySelectMenuInteraction,
   ButtonInteraction,
+  ChannelSelectMenuInteraction,
   ChatInputCommandInteraction,
+  MentionableSelectMenuInteraction,
   MessageContextMenuCommandInteraction,
-  ModalSubmitInteraction,
+  RoleSelectMenuInteraction,
+  StringSelectMenuInteraction,
   UserContextMenuCommandInteraction
 } from "discord.js";
 
@@ -29,12 +31,16 @@ export class RoleGuard extends BaseGuard<"any"> {
       | MessageContextMenuCommandInteraction<"cached">
       | UserContextMenuCommandInteraction<"cached">
       | ButtonInteraction<"cached">
-      | AnySelectMenuInteraction<"cached">
-      | ModalSubmitInteraction<"cached">
+      | StringSelectMenuInteraction<"cached">
+      | ChannelSelectMenuInteraction<"cached">
+      | RoleSelectMenuInteraction<"cached">
+      | MentionableSelectMenuInteraction<"cached">
   ) {
     if (!interaction.member) {
       container.logger.warn("While executing RoleGuard, member was not found");
-      return;
+      throw new GuardException(
+        "While executing RoleGuard, member was not found"
+      );
     }
 
     const hasRoles = this.roleIds.every(roleId =>

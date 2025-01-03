@@ -4,15 +4,14 @@ import type { BaseGuard, BaseGuardTypeMap } from "@/framework/guard/BaseGuard";
 import type { BaseTriggerTypeMap } from "@/framework/trigger/BaseTrigger";
 import { container } from "@/index";
 import { ErrorEmbed } from "@/utilities/embeds/ErrorEmbed";
-import type {
-  AnySelectMenuInteraction,
-  ButtonInteraction,
-  ChannelSelectMenuInteraction,
-  Interaction,
-  MentionableSelectMenuInteraction,
-  ModalSubmitInteraction,
-  RoleSelectMenuInteraction,
-  StringSelectMenuInteraction
+import {
+  type ButtonInteraction,
+  type ChannelSelectMenuInteraction,
+  type Interaction,
+  type MentionableSelectMenuInteraction,
+  MessageFlags,
+  type RoleSelectMenuInteraction,
+  type StringSelectMenuInteraction
 } from "discord.js";
 
 export class CoreTriggerHandle extends BaseEvent<"interactionCreate"> {
@@ -35,30 +34,24 @@ export class CoreTriggerHandle extends BaseEvent<"interactionCreate"> {
       await this.handleTrigger(interaction, "roleSelectMenu");
     } else if (interaction.isMentionableSelectMenu()) {
       await this.handleTrigger(interaction, "mentionableSelectMenu");
-    } else if (interaction.isAnySelectMenu()) {
-      await this.handleTrigger(interaction, "anySelectMenu");
-    } else if (interaction.isModalSubmit()) {
-      await this.handleTrigger(interaction, "modal");
     }
   }
 
   private async handleTrigger(
     interaction:
       | ButtonInteraction<"cached">
-      | AnySelectMenuInteraction<"cached">
       | StringSelectMenuInteraction<"cached">
       | ChannelSelectMenuInteraction<"cached">
       | RoleSelectMenuInteraction<"cached">
-      | MentionableSelectMenuInteraction<"cached">
-      | ModalSubmitInteraction<"cached">,
+      | MentionableSelectMenuInteraction<"cached">,
     type: keyof BaseTriggerTypeMap
   ) {
     const trigger = container.triggers
       .filter(t => t.type === type)
-      .find(i =>
-        i.startsWith
-          ? interaction.customId.startsWith(i.id)
-          : i.id === interaction.customId
+      .find(t =>
+        t.startsWith
+          ? interaction.customId.startsWith(t.id)
+          : t.id === interaction.customId
       );
 
     if (!trigger) return;
@@ -86,7 +79,7 @@ export class CoreTriggerHandle extends BaseEvent<"interactionCreate"> {
               `You cannot use this ${type} due to a lack of guards`
             )
           ],
-          flags: ["Ephemeral"]
+          flags: [MessageFlags.Ephemeral]
         });
         return;
       }
@@ -97,11 +90,13 @@ export class CoreTriggerHandle extends BaseEvent<"interactionCreate"> {
     } catch (error) {
       interaction.reply({
         embeds: [
-          new ErrorEmbed(`Failed to execute ${type}, error will be reported`)
+          new ErrorEmbed(
+            `Failed to execute ${type} trigger, error will be reported`
+          )
         ],
-        flags: ["Ephemeral"]
+        flags: [MessageFlags.Ephemeral]
       });
-      container.logger.error(`Failed to execute ${type}`);
+      container.logger.error(`Failed to execute ${type} trigger`);
       container.logger.error(error);
     }
   }

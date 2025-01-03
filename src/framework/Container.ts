@@ -5,6 +5,10 @@ import {
   type BaseContextMenuCommandTypeMap
 } from "@/framework/command/BaseContextMenuCommand";
 import { BaseSlashCommand } from "@/framework/command/BaseSlashCommand";
+import type {
+  BaseComponent,
+  BaseComponentTypeMap
+} from "@/framework/component/BaseComponent";
 import { BaseEvent } from "@/framework/event/BaseEvent";
 import {
   BaseTrigger,
@@ -29,6 +33,7 @@ export class Container {
     keyof BaseContextMenuCommandTypeMap
   >[] = [];
   triggers: BaseTrigger<keyof BaseTriggerTypeMap>[] = [];
+  components: BaseComponent<keyof BaseComponentTypeMap>[] = [];
 
   constructor(options: ClientOptions) {
     this.client = new Client(options);

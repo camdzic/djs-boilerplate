@@ -16,12 +16,22 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
 - **Guard System**:
   - A simple and powerful guard system.
   - Guards are basically middlewares that can be applied to commands and triggers.
-  - Guards can be applied to commands and triggers.
   - Typesafe.
-- **Trigger System**:
+- **Trigger System (static interaction handlers)**:
   - A simple and powerful trigger system.
-  - Triggers are basically interaction handlers that can be applied to buttons, select menus, and modals.
+  - Triggers are basically interaction handlers that can be applied to buttons and select menus.
   - Typesafe.
+
+  *Static means that they are loaded on bot startup and are not dynamically registered.*
+  *Triggers have a higher priority than components.*
+- **Component System**:
+  - A simple and powerful component system.
+  - Components are used as builders for buttons, select menus and modals.
+  - Framework components are used instead of raw Discord.js components.
+  - Typesafe.
+
+  *Components are dynamically registered and are not loaded on bot startup.*
+  *Components have a lower priority than triggers.*
 - **Config System**:
   - A simple and powerful config system.
   - Automatically loaded from the `config` directory.

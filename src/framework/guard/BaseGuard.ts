@@ -1,12 +1,10 @@
 import type { GuardException } from "@/framework/exception/GuardException";
 import type {
-  AnySelectMenuInteraction,
   ButtonInteraction,
   ChannelSelectMenuInteraction,
   ChatInputCommandInteraction,
   MentionableSelectMenuInteraction,
   MessageContextMenuCommandInteraction,
-  ModalSubmitInteraction,
   RoleSelectMenuInteraction,
   StringSelectMenuInteraction,
   UserContextMenuCommandInteraction
@@ -17,23 +15,19 @@ export type BaseGuardTypeMap = {
   messageContextMenuCommand: MessageContextMenuCommandInteraction<"cached">;
   userContextMenuCommand: UserContextMenuCommandInteraction<"cached">;
   button: ButtonInteraction<"cached">;
-  anySelectMenu: AnySelectMenuInteraction<"cached">;
   stringSelectMenu: StringSelectMenuInteraction<"cached">;
   channelSelectMenu: ChannelSelectMenuInteraction<"cached">;
   roleSelectMenu: RoleSelectMenuInteraction<"cached">;
   mentionableSelectMenu: MentionableSelectMenuInteraction<"cached">;
-  modal: ModalSubmitInteraction<"cached">;
   any:
     | ChatInputCommandInteraction<"cached">
     | MessageContextMenuCommandInteraction<"cached">
     | UserContextMenuCommandInteraction<"cached">
     | ButtonInteraction<"cached">
-    | AnySelectMenuInteraction<"cached">
     | StringSelectMenuInteraction<"cached">
     | ChannelSelectMenuInteraction<"cached">
     | RoleSelectMenuInteraction<"cached">
-    | MentionableSelectMenuInteraction<"cached">
-    | ModalSubmitInteraction<"cached">;
+    | MentionableSelectMenuInteraction<"cached">;
 };
 
 type BaseGuardOptions<T extends keyof BaseGuardTypeMap> = {

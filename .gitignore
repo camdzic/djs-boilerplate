@@ -178,4 +178,4 @@ dist
 config
 
 # DB
-db
+/db

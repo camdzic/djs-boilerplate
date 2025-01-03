@@ -4,10 +4,11 @@ import { GuardException } from "@/framework/exception/GuardException";
 import type { BaseGuard, BaseGuardTypeMap } from "@/framework/guard/BaseGuard";
 import { container } from "@/index";
 import { ErrorEmbed } from "@/utilities/embeds/ErrorEmbed";
-import type {
-  Interaction,
-  MessageContextMenuCommandInteraction,
-  UserContextMenuCommandInteraction
+import {
+  type Interaction,
+  type MessageContextMenuCommandInteraction,
+  MessageFlags,
+  type UserContextMenuCommandInteraction
 } from "discord.js";
 
 export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate"> {
@@ -46,7 +47,7 @@ export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate">
     if (!contextMenuCommand) {
       interaction.reply({
         embeds: [new ErrorEmbed("Unable to find wanted context menu command")],
-        flags: ["Ephemeral"]
+        flags: [MessageFlags.Ephemeral]
       });
       return;
     }
@@ -74,7 +75,7 @@ export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate">
               "You cannot use this context menu command due to a lack of guards"
             )
           ],
-          flags: ["Ephemeral"]
+          flags: [MessageFlags.Ephemeral]
         });
         return;
       }
@@ -89,7 +90,7 @@ export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate">
             "Failed to execute context menu command, error will be reported"
           )
         ],
-        flags: ["Ephemeral"]
+        flags: [MessageFlags.Ephemeral]
       });
       container.logger.error("Failed to execute context menu command");
       container.logger.error(error);
