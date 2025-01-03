@@ -63,13 +63,23 @@ export class CoreClientReadyEvent extends BaseEvent<"ready"> {
 
   private getSlashCommandRegistrationData() {
     return container.slashCommands.map(command => {
-      return {
+      const data: RESTPostAPIChatInputApplicationCommandsJSONBody = {
         name: command.name,
         description: command.description,
-        options: command.options,
-        defaultMemberPermissions: command.permissions,
         type: ApplicationCommandType.ChatInput
-      } as RESTPostAPIChatInputApplicationCommandsJSONBody;
+      };
+
+      if (command.options && command.options.length) {
+        //@ts-ignore
+        data.options = command.options;
+      }
+
+      if (command.permissions && command.permissions.length) {
+        //@ts-ignore
+        data.defaultMemberPermissions = command.permissions;
+      }
+
+      return data;
     });
   }
 

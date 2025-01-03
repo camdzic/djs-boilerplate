@@ -3,7 +3,7 @@ import { GuardException } from "@/framework/exception/GuardException";
 import type { BaseGuard, BaseGuardTypeMap } from "@/framework/guard/BaseGuard";
 import { container } from "@/index";
 import { ErrorEmbed } from "@/utilities/embeds/ErrorEmbed";
-import { MessageFlags, type Interaction } from "discord.js";
+import { type Interaction, MessageFlags } from "discord.js";
 
 export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
   constructor() {
@@ -51,7 +51,7 @@ export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
               "You cannot use this slash command due to a lack of guards"
             )
           ],
-      flags: [MessageFlags.Ephemeral]
+          flags: [MessageFlags.Ephemeral]
         });
         return;
       }

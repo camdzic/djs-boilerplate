@@ -60,7 +60,8 @@
         "noUselessConstructor": "warn",
         "noUselessLabel": "warn",
         "noUselessLoneBlockStatements": "warn",
-        "useFlatMap": "warn"
+        "useFlatMap": "warn",
+        "useOptionalChain": "off"
       },
       "suspicious": {
         "noDoubleEquals": "warn",

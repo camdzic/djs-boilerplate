@@ -13,6 +13,11 @@ export class ModalComponentBuilder extends ModalBuilder {
     allowedExecutorIds = [],
     executionThreshold = 60 * 1000 * 5
   }: ModalComponentBuilderExecuteOptions) {
+    this.setCustomId(
+      //@ts-ignore
+      `${this.data.custom_id}#${this.generateId()}`
+    );
+
     container.components.push({
       //@ts-ignore
       id: this.data.custom_id,
@@ -30,5 +35,9 @@ export class ModalComponentBuilder extends ModalBuilder {
     }, executionThreshold);
 
     return this;
+  }
+
+  generateId() {
+    return Math.floor(1000 + Math.random() * 9000);
   }
 }
