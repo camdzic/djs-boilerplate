@@ -25,18 +25,12 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
   * Example: 
     * We will create ticket panel command with a button that creates a ticket. 
     * The button will be registered on bot startup and will always be available.
-
-  *Static means that they are loaded on bot startup and are not dynamically registered.*
-  *Triggers have a higher priority than components.*
 * **Component Builder System (dynamic interaction builders)**:
   * A simple and powerful component system.
   * Components are used as builders for buttons, select menus and modals.
   * Framework components are used instead of raw Discord.js components.
   * Can customize the component's behavior (e.g. specific allowed executors & expiration time).
   * Typesafe.
-
-  *Components are dynamically registered and are not loaded on bot startup.*
-  *Components have a lower priority than triggers.*
 * **Config System**:
   * A simple and powerful config system.
   * Automatically loaded from the `config` directory.
