@@ -14,7 +14,7 @@ export class PingContextMenuCommand extends BaseContextMenuCommand<"messageConte
   }
 
   execute(interaction: MessageContextMenuCommandInteraction<"cached">) {
-    interaction.reply({
+    return interaction.reply({
       content: "Pong!",
       flags: ["Ephemeral"]
     });

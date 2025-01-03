@@ -12,6 +12,7 @@ import {
 } from "@/framework/trigger/BaseTrigger";
 import { Config } from "@/framework/utility/Config";
 import { Logger } from "@/framework/utility/Logger";
+import { DatabaseHelper } from "@/utilities/db/DatabaseHelper";
 import { Client, type ClientOptions } from "discord.js";
 
 export class Container {
@@ -21,6 +22,7 @@ export class Container {
   readonly messages: Config;
 
   readonly logger: Logger;
+  readonly db: DatabaseHelper;
 
   slashCommands: BaseSlashCommand[] = [];
   contextMenuCommands: BaseContextMenuCommand<
@@ -47,6 +49,7 @@ export class Container {
     this.messages = new Config("config/messages.json", {});
 
     this.logger = new Logger();
+    this.db = new DatabaseHelper();
 
     this.start();
   }

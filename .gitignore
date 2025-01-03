@@ -176,3 +176,6 @@ dist
 
 # Config 
 config
+
+# DB
+db

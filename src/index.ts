@@ -1,3 +1,5 @@
+import "reflect-metadata";
+
 import { Container } from "@/framework";
 import { Partials } from "discord.js";
 

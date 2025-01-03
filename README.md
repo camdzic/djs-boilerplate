@@ -28,6 +28,11 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
   - Fully customizable.
   - Fully typed.
 
+## Credits
+
+This project is heavily inspired by [Colossus](https://github.com/RyanLandDev/Colossus)
+*Colossus* is JDA framework for creating Discord bots with ease.
+
 ## Support
 
 If you need help with this project, you can send me a message on Discord (`camdzic`) or open an issue on GitHub.

@@ -1,4 +1,5 @@
 import { BaseSlashCommand, ChannelTypeGuard } from "@/framework";
+import { container } from "@/index";
 import {
   ActionRowBuilder,
   ButtonBuilder,
@@ -18,8 +19,33 @@ export class PingSlashCommand extends BaseSlashCommand {
     });
   }
 
-  execute(interaction: ChatInputCommandInteraction<"cached">) {
-    interaction.reply({
+  async execute(interaction: ChatInputCommandInteraction<"cached">) {
+    const userEntity = await container.db.users.getOne(
+      interaction.user.id,
+      interaction.guild.id
+    );
+    console.log(userEntity);
+
+    const allUserEntities = await container.db.users.get();
+    console.log(allUserEntities);
+
+    const updatedUserEntity = await container.db.users.update(
+      interaction.user.id,
+      interaction.guild.id,
+      {
+        messages: userEntity.messages + 1
+      }
+    );
+    console.log(updatedUserEntity);
+
+    await container.db.users.delete(interaction.user.id, interaction.guild.id);
+    const userEntity2 = await container.db.users.getOne(
+      interaction.user.id,
+      interaction.guild.id
+    );
+    console.log(userEntity2);
+
+    return interaction.reply({
       content: "Pong!",
       components: [
         new ActionRowBuilder<ButtonBuilder>().setComponents(

@@ -99,7 +99,7 @@ export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate">
   private isSpecificGuard(
     guard: BaseGuard<keyof BaseGuardTypeMap>,
     type: keyof BaseGuardTypeMap
-  ): guard is BaseGuard<typeof type> | BaseGuard<"any"> {
-    return guard.type === type || guard.type === "any";
+  ): guard is BaseGuard<typeof type> {
+    return guard.type === type;
   }
 }
