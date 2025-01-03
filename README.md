@@ -20,11 +20,8 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
 * **Trigger System (static interaction handlers)**:
   * A simple and powerful trigger system.
   * Triggers are basically interaction handlers that can be applied to buttons and select menus.
+  * They are loaded from the `triggers` directory on bot startup.
   * Typesafe.
-
-  * Example: 
-    * We will create ticket panel command with a button that creates a ticket. 
-    * The button will be registered on bot startup and will always be available.
 * **Component Builder System (dynamic interaction builders)**:
   * A simple and powerful component system.
   * Components are used as builders for buttons, select menus and modals.
