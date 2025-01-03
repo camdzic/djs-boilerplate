@@ -22,13 +22,23 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
   - Triggers are basically interaction handlers that can be applied to buttons and select menus.
   - Typesafe.
 
+  - Example:
+    - We will create ticket panel command with a button that creates a ticket.
+    - The button will be registered on bot startup and will always be available.
+
   *Static means that they are loaded on bot startup and are not dynamically registered.*
   *Triggers have a higher priority than components.*
 - **Component Builder System (dynamic interaction builders)**:
   - A simple and powerful component system.
   - Components are used as builders for buttons, select menus and modals.
   - Framework components are used instead of raw Discord.js components.
+  - Can customize the component's behavior (e.g. specific allowed executors & expiration time).
   - Typesafe.
+
+  - Example:
+    - We will create avatar command with a button that sends a message with the user's avatar.
+    - The button will not be registered on bot startup, but it will be registered when the command is executed.
+    - The button will be automatically removed after 5 minutes (by default).
 
   *Components are dynamically registered and are not loaded on bot startup.*
   *Components have a lower priority than triggers.*
