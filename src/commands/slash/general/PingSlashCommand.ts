@@ -32,8 +32,8 @@ export class PingSlashCommand extends BaseSlashCommand {
             .setCustomId("test")
             .setStyle(ButtonStyle.Primary)
             .setExecute({
-              execute: async i => {
-                await i.reply({
+              execute: i => {
+                return i.reply({
                   content: `Test! ${randomUUIDv7()}`,
                   flags: [MessageFlags.Ephemeral]
                 });
@@ -45,8 +45,8 @@ export class PingSlashCommand extends BaseSlashCommand {
             .setCustomId("testTwo")
             .setStyle(ButtonStyle.Primary)
             .setExecute({
-              execute: async i => {
-                await i.reply({
+              execute: i => {
+                return i.reply({
                   content: `Test 2! ${randomUUIDv7()}`,
                   flags: [MessageFlags.Ephemeral]
                 });
