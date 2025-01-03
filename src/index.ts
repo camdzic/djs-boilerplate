@@ -1,7 +1,13 @@
 import { Container } from "@/framework";
-import { GatewayIntentBits, Partials } from "discord.js";
+import { Partials } from "discord.js";
 
 export const container = new Container({
-  intents: [GatewayIntentBits.Guilds],
-  partials: [Partials.Channel]
+  intents: [],
+  partials: [
+    Partials.Channel,
+    Partials.Message,
+    Partials.User,
+    Partials.GuildMember,
+    Partials.Reaction
+  ]
 });

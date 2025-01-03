@@ -1,13 +1,12 @@
-import { BaseTrigger, ChannelTypeGuard } from "@/framework";
-import { type ButtonInteraction, ChannelType } from "discord.js";
+import { BaseTrigger } from "@/framework";
+import type { ButtonInteraction } from "discord.js";
 
 export class PingTrigger extends BaseTrigger<"button"> {
   constructor() {
     super({
       id: "ping-",
       type: "button",
-      startsWith: true,
-      guards: [new ChannelTypeGuard(ChannelType.GuildText)]
+      startsWith: true
     });
   }
 

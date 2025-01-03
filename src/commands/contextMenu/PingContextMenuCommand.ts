@@ -1,12 +1,15 @@
-import { BaseContextMenuCommand, RoleGuard } from "@/framework";
-import type { MessageContextMenuCommandInteraction } from "discord.js";
+import { BaseContextMenuCommand, ChannelTypeGuard } from "@/framework";
+import {
+  ChannelType,
+  type MessageContextMenuCommandInteraction
+} from "discord.js";
 
 export class PingContextMenuCommand extends BaseContextMenuCommand<"messageContextMenuCommand"> {
   constructor() {
     super({
       name: "Context Menu Ping",
       type: "messageContextMenuCommand",
-      guards: [new RoleGuard(true, "1324435368807764029")]
+      guards: [new ChannelTypeGuard(ChannelType.GuildText)]
     });
   }
 

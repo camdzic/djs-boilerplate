@@ -1,7 +1,15 @@
 import { GuardException } from "@/framework/exception/GuardException";
 import { BaseGuard } from "@/framework/guard/BaseGuard";
 import { container } from "@/index";
-import type { ChannelType, ChatInputCommandInteraction } from "discord.js";
+import type {
+  AnySelectMenuInteraction,
+  ButtonInteraction,
+  ChannelType,
+  ChatInputCommandInteraction,
+  MessageContextMenuCommandInteraction,
+  ModalSubmitInteraction,
+  UserContextMenuCommandInteraction
+} from "discord.js";
 
 export class ChannelTypeGuard extends BaseGuard<"any"> {
   private readonly channelTypes: ChannelType[];
@@ -14,7 +22,15 @@ export class ChannelTypeGuard extends BaseGuard<"any"> {
     this.channelTypes = channelTypes;
   }
 
-  execute(interaction: ChatInputCommandInteraction<"cached">) {
+  execute(
+    interaction:
+      | ChatInputCommandInteraction<"cached">
+      | MessageContextMenuCommandInteraction<"cached">
+      | UserContextMenuCommandInteraction<"cached">
+      | ButtonInteraction<"cached">
+      | AnySelectMenuInteraction<"cached">
+      | ModalSubmitInteraction<"cached">
+  ) {
     if (!interaction.channel) {
       container.logger.warn(
         "While executing ChannelTypeGuard, channel was not found"

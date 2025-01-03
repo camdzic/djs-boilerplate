@@ -5,7 +5,9 @@ import type {
   AnySelectMenuInteraction,
   ButtonInteraction,
   ChatInputCommandInteraction,
-  ModalSubmitInteraction
+  MessageContextMenuCommandInteraction,
+  ModalSubmitInteraction,
+  UserContextMenuCommandInteraction
 } from "discord.js";
 
 export class RoleGuard extends BaseGuard<"any"> {
@@ -24,6 +26,8 @@ export class RoleGuard extends BaseGuard<"any"> {
   execute(
     interaction:
       | ChatInputCommandInteraction<"cached">
+      | MessageContextMenuCommandInteraction<"cached">
+      | UserContextMenuCommandInteraction<"cached">
       | ButtonInteraction<"cached">
       | AnySelectMenuInteraction<"cached">
       | ModalSubmitInteraction<"cached">
