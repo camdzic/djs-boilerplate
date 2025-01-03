@@ -24,7 +24,7 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
 
   *Static means that they are loaded on bot startup and are not dynamically registered.*
   *Triggers have a higher priority than components.*
-- **Component System**:
+- **Component Builder System (dynamic interaction builders)**:
   - A simple and powerful component system.
   - Components are used as builders for buttons, select menus and modals.
   - Framework components are used instead of raw Discord.js components.
