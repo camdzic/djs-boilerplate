@@ -25,7 +25,6 @@ export class RoleSelectMenuComponentBuilder extends RoleSelectMenuBuilder {
 
     this.setCustomId(customId);
 
-
     const timeout = setTimeout(() => {
       container.components = container.components.filter(
         c => c.type !== "roleSelectMenu" || c.id !== customId
@@ -42,7 +41,6 @@ export class RoleSelectMenuComponentBuilder extends RoleSelectMenuBuilder {
       timeout,
       execute
     });
-
 
     return this;
   }

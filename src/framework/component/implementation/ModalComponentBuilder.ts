@@ -7,19 +7,13 @@ import {
 
 type ModalComponentBuilderExecuteOptions = {
   execute: (interaction: ModalSubmitInteraction<"cached">) => unknown;
-  allowedExecutorIds?: string[];
   executionThreshold?: number;
-  disposeOnInteract?: boolean;
-  renewOnInteract?: boolean;
 };
 
 export class ModalComponentBuilder extends ModalBuilder {
   setExecute({
     execute,
-    allowedExecutorIds = [],
-    executionThreshold = 60 * 1000 * 5,
-    disposeOnInteract = false,
-    renewOnInteract = false
+    executionThreshold = 60 * 1000 * 5
   }: ModalComponentBuilderExecuteOptions) {
     const customId = SnowflakeUtil.generate().toString();
 
@@ -34,10 +28,10 @@ export class ModalComponentBuilder extends ModalBuilder {
     container.components.push({
       id: customId,
       type: "modal",
-      allowedExecutorIds,
+      allowedExecutorIds: [],
       executionThreshold,
-      disposeOnInteract,
-      renewOnInteract,
+      disposeOnInteract: false,
+      renewOnInteract: false,
       timeout,
       execute
     });
