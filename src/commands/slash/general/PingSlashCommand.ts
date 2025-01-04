@@ -31,25 +31,28 @@ export class PingSlashCommand extends BaseSlashCommand {
             .setLabel("Test")
             .setStyle(ButtonStyle.Primary)
             .setExecute({
+              executionThreshold: 10 * 1000,
               execute: i => {
                 return i.reply({
                   content: `Test! ${randomUUIDv7()}`,
                   flags: [MessageFlags.Ephemeral]
                 });
-              },
-              executionThreshold: 10 * 1000
+              }
             }),
           new ButtonComponentBuilder()
             .setLabel("Test 2")
             .setStyle(ButtonStyle.Primary)
             .setExecute({
+              allowedExecutorIds: [interaction.user.id],
+              disposeOnInteract: true,
+              renewOnInteract: true,
+              executionThreshold: 10 * 1000,
               execute: i => {
                 return i.reply({
                   content: `Test 2! ${randomUUIDv7()}`,
                   flags: [MessageFlags.Ephemeral]
                 });
-              },
-              allowedExecutorIds: [interaction.user.id]
+              }
             })
         )
       ]

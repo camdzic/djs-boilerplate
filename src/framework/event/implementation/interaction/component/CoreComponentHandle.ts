@@ -3,10 +3,14 @@ import { BaseEvent } from "@/framework/event/BaseEvent";
 import { container } from "@/index";
 import { ErrorEmbed } from "@/utilities/embeds/ErrorEmbed";
 import {
+  ActionRowBuilder,
+  BaseSelectMenuBuilder,
+  ButtonBuilder,
   type ButtonInteraction,
   type ChannelSelectMenuInteraction,
   type Interaction,
   type MentionableSelectMenuInteraction,
+  type MessageActionRowComponentBuilder,
   MessageFlags,
   type ModalSubmitInteraction,
   type RoleSelectMenuInteraction,
@@ -69,6 +73,48 @@ export class CoreComponentHandle extends BaseEvent<"interactionCreate"> {
 
     try {
       await component.execute(interaction);
+
+      if (component.renewOnInteract) {
+        clearTimeout(component.timeout);
+
+        component.timeout = setTimeout(() => {
+          container.components = container.components.filter(
+            c => c.type !== type || c.id !== interaction.customId
+          );
+        }, component.executionThreshold);
+
+        return;
+      }
+
+      if (component.disposeOnInteract) {
+        container.components = container.components.filter(
+          c => c.type !== type || c.id !== interaction.customId
+        );
+
+        if (interaction.message) {
+          const updatedMessageComponents = interaction.message.components.map(
+            row => {
+              const newRow = ActionRowBuilder.from(row);
+
+              for (const component of newRow.components) {
+                if ("custom_id" in component.data) {
+                  if (
+                    (component instanceof BaseSelectMenuBuilder ||
+                      component instanceof ButtonBuilder) &&
+                    component.data.custom_id === interaction.customId
+                  ) {
+                    component.setDisabled(true);
+                  }
+                }
+              }
+
+              return newRow as ActionRowBuilder<MessageActionRowComponentBuilder>;
+            }
+          );
+
+          interaction.message.edit({ components: updatedMessageComponents });
+        }
+      }
     } catch (error) {
       interaction.reply({
         embeds: [
