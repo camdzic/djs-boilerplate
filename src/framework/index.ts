@@ -8,6 +8,8 @@ export * from "@/framework/event/BaseEvent";
 export * from "@/framework/guard/BaseGuard";
 export * from "@/framework/guard/implementation/ChannelTypeGuard";
 export * from "@/framework/guard/implementation/RoleGuard";
+export * from "@/framework/guard/implementation/nested/AndGuard";
+export * from "@/framework/guard/implementation/nested/OrGuard";
 
 export * from "@/framework/trigger/BaseTrigger";
 
