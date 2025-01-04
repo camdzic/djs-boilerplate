@@ -3,6 +3,7 @@ import { BaseEvent } from "@/framework/event/BaseEvent";
 import { container } from "@/index";
 import {
   ApplicationCommandType,
+  InteractionContextType,
   type RESTPostAPIChatInputApplicationCommandsJSONBody,
   type RESTPostAPIContextMenuApplicationCommandsJSONBody
 } from "discord.js";
@@ -66,7 +67,8 @@ export class CoreClientReadyEvent extends BaseEvent<"ready"> {
       const data: RESTPostAPIChatInputApplicationCommandsJSONBody = {
         name: command.name,
         description: command.description,
-        type: ApplicationCommandType.ChatInput
+        type: ApplicationCommandType.ChatInput,
+        contexts: [InteractionContextType.Guild]
       };
 
       if (command.options && command.options.length) {
@@ -95,7 +97,8 @@ export class CoreClientReadyEvent extends BaseEvent<"ready"> {
 
       return {
         name: command.name,
-        type: commandTypeMap[command.type]
+        type: commandTypeMap[command.type],
+        contexts: [InteractionContextType.Guild]
       } as RESTPostAPIContextMenuApplicationCommandsJSONBody;
     });
   }

@@ -54,8 +54,8 @@ export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate">
 
     if (contextMenuCommand.guards) {
       const failedGuards = [];
-      const contextMenuCommandGuards = contextMenuCommand.guards.filter(guard =>
-        this.isSpecificGuard(guard, type)
+      const contextMenuCommandGuards = contextMenuCommand.guards.filter(g =>
+        this.isSpecificGuard(g, type)
       );
 
       for (const guard of contextMenuCommandGuards) {
@@ -100,7 +100,7 @@ export class CoreContextMenuCommandHandle extends BaseEvent<"interactionCreate">
   private isSpecificGuard(
     guard: BaseGuard<keyof BaseGuardTypeMap>,
     type: keyof BaseGuardTypeMap
-  ): guard is BaseGuard<typeof type> {
-    return guard.type === type;
+  ): guard is BaseGuard<typeof type> | BaseGuard<"any"> {
+    return guard.type === type || guard.type === "any";
   }
 }

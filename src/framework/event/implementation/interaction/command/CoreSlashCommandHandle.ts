@@ -30,8 +30,8 @@ export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
 
     if (slashCommand.guards) {
       const failedGuards = [];
-      const commandGuards = slashCommand.guards.filter(guard =>
-        this.isSpecificGuard(guard, "slashCommand")
+      const commandGuards = slashCommand.guards.filter(g =>
+        this.isSpecificGuard(g, "slashCommand")
       );
 
       for (const guard of commandGuards) {
@@ -76,7 +76,7 @@ export class CoreSlashCommandHandle extends BaseEvent<"interactionCreate"> {
   private isSpecificGuard(
     guard: BaseGuard<keyof BaseGuardTypeMap>,
     type: keyof BaseGuardTypeMap
-  ): guard is BaseGuard<typeof type> {
-    return guard.type === type;
+  ): guard is BaseGuard<typeof type> | BaseGuard<"any"> {
+    return guard.type === type || guard.type === "any";
   }
 }

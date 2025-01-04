@@ -13,12 +13,12 @@ import type {
   UserContextMenuCommandInteraction
 } from "discord.js";
 
-export class ChannelTypeGuard extends BaseGuard<"any"> {
+export class ChannelTypeGuard extends BaseGuard<"button"> {
   private readonly channelTypes: ChannelType[];
 
   constructor(...channelTypes: ChannelType[]) {
     super({
-      type: "any"
+      type: "button"
     });
 
     this.channelTypes = channelTypes;

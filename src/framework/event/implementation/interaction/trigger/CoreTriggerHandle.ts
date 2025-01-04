@@ -58,8 +58,8 @@ export class CoreTriggerHandle extends BaseEvent<"interactionCreate"> {
 
     if (trigger.guards) {
       const failedGuards = [];
-      const triggerGuards = trigger.guards.filter(guard =>
-        this.isSpecificGuard(guard, type)
+      const triggerGuards = trigger.guards.filter(g =>
+        this.isSpecificGuard(g, type)
       );
 
       for (const guard of triggerGuards) {
@@ -104,7 +104,7 @@ export class CoreTriggerHandle extends BaseEvent<"interactionCreate"> {
   private isSpecificGuard(
     guard: BaseGuard<keyof BaseGuardTypeMap>,
     type: keyof BaseGuardTypeMap
-  ): guard is BaseGuard<typeof type> {
-    return guard.type === type;
+  ): guard is BaseGuard<typeof type> | BaseGuard<"any"> {
+    return guard.type === type || guard.type === "any";
   }
 }

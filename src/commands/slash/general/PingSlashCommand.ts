@@ -37,7 +37,7 @@ export class PingSlashCommand extends BaseSlashCommand {
                   flags: [MessageFlags.Ephemeral]
                 });
               },
-              executionThreshold: 10000
+              executionThreshold: 10 * 1000
             }),
           new ButtonComponentBuilder()
             .setLabel("Test 2")

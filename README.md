@@ -16,6 +16,7 @@ A high-level, opinionated, and feature-rich Discord.js bot boilerplate
 * **Guard System**:
   * A simple and powerful guard system.
   * Guards are basically middlewares that can be applied to commands and triggers.
+  * Many built-in guards are provided, including nested guards (e.g. `AndGuard`, `OrGuard`).
   * Typesafe.
 * **Trigger System (static interaction handlers)**:
   * A simple and powerful trigger system.
